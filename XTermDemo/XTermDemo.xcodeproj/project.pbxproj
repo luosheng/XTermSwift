@@ -11,6 +11,8 @@
 		B35569EF28BD96F9001C980D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35569EE28BD96F9001C980D /* ContentView.swift */; };
 		B35569F128BD96FA001C980D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B35569F028BD96FA001C980D /* Assets.xcassets */; };
 		B35569F428BD96FA001C980D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B35569F328BD96FA001C980D /* Preview Assets.xcassets */; };
+		B35569FF28BD9726001C980D /* XTerm in Frameworks */ = {isa = PBXBuildFile; productRef = B35569FE28BD9726001C980D /* XTerm */; };
+		B3556A0328BD976D001C980D /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3556A0228BD976D001C980D /* TerminalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		B35569F028BD96FA001C980D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B35569F328BD96FA001C980D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B35569F528BD96FA001C980D /* XTermDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XTermDemo.entitlements; sourceTree = "<group>"; };
+		B35569FC28BD9711001C980D /* XTerm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XTerm; path = ..; sourceTree = "<group>"; };
+		B3556A0228BD976D001C980D /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B35569FF28BD9726001C980D /* XTerm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,8 +41,10 @@
 		B35569E028BD96F9001C980D = {
 			isa = PBXGroup;
 			children = (
+				B35569FB28BD9711001C980D /* Packages */,
 				B35569EB28BD96F9001C980D /* XTermDemo */,
 				B35569EA28BD96F9001C980D /* Products */,
+				B35569FD28BD9726001C980D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				B35569EC28BD96F9001C980D /* XTermDemoApp.swift */,
+				B3556A0228BD976D001C980D /* TerminalView.swift */,
 				B35569EE28BD96F9001C980D /* ContentView.swift */,
 				B35569F028BD96FA001C980D /* Assets.xcassets */,
 				B35569F528BD96FA001C980D /* XTermDemo.entitlements */,
@@ -67,6 +75,21 @@
 				B35569F328BD96FA001C980D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B35569FB28BD9711001C980D /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				B35569FC28BD9711001C980D /* XTerm */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		B35569FD28BD9726001C980D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +108,9 @@
 			dependencies = (
 			);
 			name = XTermDemo;
+			packageProductDependencies = (
+				B35569FE28BD9726001C980D /* XTerm */,
+			);
 			productName = XTermDemo;
 			productReference = B35569E928BD96F9001C980D /* XTermDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -140,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B35569EF28BD96F9001C980D /* ContentView.swift in Sources */,
+				B3556A0328BD976D001C980D /* TerminalView.swift in Sources */,
 				B35569ED28BD96F9001C980D /* XTermDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +359,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B35569FE28BD9726001C980D /* XTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = XTerm;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B35569E128BD96F9001C980D /* Project object */;
 }
