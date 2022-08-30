@@ -15,7 +15,15 @@ public class XTermView: WKWebView {
   }
   
   private func setup() {
-    
+    guard let resourceURL = Bundle.module.resourceURL else {
+      return
+    }
+    let indexURL = resourceURL.appendingPathComponent("index.html")
+    if #available(macOS 12.0, *) {
+      self.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
+    } else {
+      // Fallback on earlier versions
+    }
   }
   
 }
