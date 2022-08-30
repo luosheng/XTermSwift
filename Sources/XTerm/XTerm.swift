@@ -1,5 +1,6 @@
 import WebKit
 
+@available(macOS 12.0, *)
 public class XTermView: NSView {
   
   private var webView: WKWebView!
@@ -15,7 +16,8 @@ public class XTermView: NSView {
   }
   
   private func setup() {
-    webView = WKWebView(frame: .zero)
+    let configuration = WKWebViewConfiguration()
+    webView = WKWebView(frame: .zero, configuration: configuration)
     webView.autoresizingMask = [.width, .height]
     self.addSubview(webView)
     
@@ -23,10 +25,8 @@ public class XTermView: NSView {
       return
     }
     let indexURL = resourceURL.appendingPathComponent("index.html")
-    if #available(macOS 12.0, *) {
-      webView.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
-    } else {
-      // Fallback on earlier versions
+    webView.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
+  }
     }
   }
   
