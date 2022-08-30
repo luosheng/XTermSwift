@@ -24,6 +24,8 @@ let package = Package(
       exclude: ["Resources/package.json", "Resources/package-lock.json"],
       resources: [
         .process("Resources/index.html"),
+        .process("Resources/main.js"),
+        .process("Resources/styles.css"),
         .copy("Resources/node_modules")
       ]
     )
