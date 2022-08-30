@@ -27,6 +27,10 @@ public class XTermView: NSView {
     let indexURL = resourceURL.appendingPathComponent("index.html")
     webView.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
   }
+  
+  public func write(_ data: String) {
+    self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page) { _ in
+      
     }
   }
   
