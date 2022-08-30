@@ -12,7 +12,7 @@ import XTerm
 struct TerminalView: NSViewRepresentable {
   
   func makeNSView(context: Context) -> some NSView {
-    XTermView()
+    XTermView(frame: .zero)
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {
