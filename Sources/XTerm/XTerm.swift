@@ -49,6 +49,20 @@ public class XTermView: NSView, DataHandlerDelegate {
     }
   }
   
+  public func getRows() async -> Int {
+    guard let result = try? await self.webView.callAsyncJavaScript("return term.rows", contentWorld: .page) as? Int else {
+      return 0
+    }
+    return result
+  }
+  
+  public func getCols() async -> Int {
+    guard let result = try? await self.webView.callAsyncJavaScript("return term.cols", contentWorld: .page) as? Int else {
+      return 0
+    }
+    return result
+  }
+  
   // MARK: - DataHandlerDelegate
 
   func onData(_ data: String) {
