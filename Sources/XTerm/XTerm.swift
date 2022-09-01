@@ -43,10 +43,8 @@ public class XTermView: NSView, DataHandlerDelegate {
     self.userContentController.add(dataHandler, name: "xtermOnData")
   }
   
-  public func write(_ data: String) {
-    self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page) { _ in
-      
-    }
+  public func write(_ data: String) async {
+    self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page)
   }
   
   public func getRows() async -> Int {
