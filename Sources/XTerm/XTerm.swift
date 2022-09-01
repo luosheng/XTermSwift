@@ -52,7 +52,7 @@ public class XTermView: NSView, DataHandlerDelegate {
   // MARK: - DataHandlerDelegate
 
   func onData(_ data: String) {
-    print(data.unicodeScalars)
+    delegate?.onData(data)
   }
   
 }
