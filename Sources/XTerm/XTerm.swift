@@ -4,22 +4,11 @@ protocol XTermViewDelegate {
   func onData(_ data: String)
 }
 
-protocol XTermHandler: WKScriptMessageHandler {
-  var delegate: XTermViewDelegate? { get set }
-}
-
 @available(macOS 12.0, *)
-public class XTermView: NSView {
+public class XTermView: NSView, DataHandlerDelegate {
   
   private var webView: WKWebView!
-  var delegate: XTermViewDelegate? {
-    didSet {
-      for i in 0..<handlers.count {
-        handlers[i].delegate = delegate
-      }
-    }
-  }
-  var handlers: [XTermHandler] = []
+  var delegate: XTermViewDelegate?
   var userContentController = WKUserContentController()
   
   public override init(frame frameRect: NSRect) {
@@ -35,6 +24,8 @@ public class XTermView: NSView {
   private func setup() {
     let configuration = WKWebViewConfiguration()
     configuration.userContentController = userContentController
+    self.setupHandlers()
+    
     webView = WKWebView(frame: .zero, configuration: configuration)
     webView.autoresizingMask = [.width, .height]
     self.addSubview(webView)
@@ -46,15 +37,22 @@ public class XTermView: NSView {
     webView.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
   }
   
-  private func addHandler(_ handler: XTermHandler, name: String) {
-    self.userContentController.add(handler, name: name)
-    self.handlers.append(handler)
+  private func setupHandlers() {
+    let dataHandler = DataHandler()
+    dataHandler.delegate = self
+    self.userContentController.add(dataHandler, name: "xtermOnData")
   }
   
   public func write(_ data: String) {
     self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page) { _ in
       
     }
+  }
+  
+  // MARK: - DataHandlerDelegate
+
+  func onData(_ data: String) {
+    print(data.unicodeScalars)
   }
   
 }
