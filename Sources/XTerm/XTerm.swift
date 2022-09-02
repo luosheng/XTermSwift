@@ -41,6 +41,9 @@ public class XTermView: NSView, DataHandlerDelegate {
     let dataHandler = DataHandler()
     dataHandler.delegate = self
     self.userContentController.add(dataHandler, name: "xtermOnData")
+    
+    let sizeUpdateHandler = SizeUpdateHandler()
+    self.userContentController.add(sizeUpdateHandler, name: "sizeUpdateHandler")
   }
   
   public func write(_ data: String) async {

@@ -8533,12 +8533,15 @@
     const fitAddon = new import_xterm_addon_fit.FitAddon();
     term.loadAddon(fitAddon);
     term.open(document.getElementById("terminal"));
-    fitAddon.fit();
+    const fitAndReport = () => {
+      fitAddon.fit();
+      const { cols, rows } = term;
+      window.webkit.messageHandlers.sizeUpdateHandler.postMessage(JSON.stringify({ cols, rows }));
+    };
+    fitAndReport();
+    window.addEventListener("resize", fitAndReport);
     term.onData((data) => {
       window.webkit.messageHandlers.xtermOnData.postMessage(data);
-    });
-    window.addEventListener("resize", () => {
-      fitAddon.fit();
     });
   };
   main();

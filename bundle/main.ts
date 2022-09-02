@@ -8,14 +8,18 @@ const main = () => {
   const fitAddon = new FitAddon()
   term.loadAddon(fitAddon)
   term.open(document.getElementById('terminal')!)
-  fitAddon.fit()
+
+  const fitAndReport = () => {
+    fitAddon.fit()
+    const { cols, rows } = term
+    window.webkit.messageHandlers.sizeUpdateHandler.postMessage(JSON.stringify({ cols, rows }))
+  }
+
+  fitAndReport()
+  window.addEventListener('resize', fitAndReport)
 
   term.onData(data => {
     window.webkit.messageHandlers.xtermOnData.postMessage(data)
-  })
-
-  window.addEventListener('resize', () => {
-    fitAddon.fit()
   })
 }
 
