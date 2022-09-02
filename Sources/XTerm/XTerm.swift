@@ -5,7 +5,9 @@ protocol XTermViewDelegate {
 }
 
 @available(macOS 12.0, *)
-public class XTermView: NSView, DataHandlerDelegate {
+public class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
+  
+  public var size = Size(cols: 0, rows: 0)
   
   private var webView: WKWebView!
   var delegate: XTermViewDelegate?
@@ -43,6 +45,7 @@ public class XTermView: NSView, DataHandlerDelegate {
     self.userContentController.add(dataHandler, name: "xtermOnData")
     
     let sizeUpdateHandler = SizeUpdateHandler()
+    sizeUpdateHandler.delegate = self
     self.userContentController.add(sizeUpdateHandler, name: "sizeUpdateHandler")
   }
   
@@ -68,6 +71,12 @@ public class XTermView: NSView, DataHandlerDelegate {
 
   func onData(_ data: String) {
     delegate?.onData(data)
+  }
+  
+  // MARK: - SizeUpdateDelegate
+  
+  func didUpdateSize(_ size: Size) {
+    self.size = size
   }
   
 }
