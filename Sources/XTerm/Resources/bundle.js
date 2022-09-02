@@ -8480,13 +8480,65 @@
     }
   });
 
+  // node_modules/.pnpm/xterm-addon-fit@0.5.0_xterm@4.19.0/node_modules/xterm-addon-fit/lib/xterm-addon-fit.js
+  var require_xterm_addon_fit = __commonJS({
+    "node_modules/.pnpm/xterm-addon-fit@0.5.0_xterm@4.19.0/node_modules/xterm-addon-fit/lib/xterm-addon-fit.js"(exports, module) {
+      !function(e, t) {
+        "object" == typeof exports && "object" == typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define([], t) : "object" == typeof exports ? exports.FitAddon = t() : e.FitAddon = t();
+      }(self, function() {
+        return (() => {
+          "use strict";
+          var e = { 775: (e2, t2) => {
+            Object.defineProperty(t2, "__esModule", { value: true }), t2.FitAddon = void 0;
+            var r = function() {
+              function e3() {
+              }
+              return e3.prototype.activate = function(e4) {
+                this._terminal = e4;
+              }, e3.prototype.dispose = function() {
+              }, e3.prototype.fit = function() {
+                var e4 = this.proposeDimensions();
+                if (e4 && this._terminal) {
+                  var t3 = this._terminal._core;
+                  this._terminal.rows === e4.rows && this._terminal.cols === e4.cols || (t3._renderService.clear(), this._terminal.resize(e4.cols, e4.rows));
+                }
+              }, e3.prototype.proposeDimensions = function() {
+                if (this._terminal && this._terminal.element && this._terminal.element.parentElement) {
+                  var e4 = this._terminal._core;
+                  if (0 !== e4._renderService.dimensions.actualCellWidth && 0 !== e4._renderService.dimensions.actualCellHeight) {
+                    var t3 = window.getComputedStyle(this._terminal.element.parentElement), r2 = parseInt(t3.getPropertyValue("height")), i = Math.max(0, parseInt(t3.getPropertyValue("width"))), n = window.getComputedStyle(this._terminal.element), o = r2 - (parseInt(n.getPropertyValue("padding-top")) + parseInt(n.getPropertyValue("padding-bottom"))), a = i - (parseInt(n.getPropertyValue("padding-right")) + parseInt(n.getPropertyValue("padding-left"))) - e4.viewport.scrollBarWidth;
+                    return { cols: Math.max(2, Math.floor(a / e4._renderService.dimensions.actualCellWidth)), rows: Math.max(1, Math.floor(o / e4._renderService.dimensions.actualCellHeight)) };
+                  }
+                }
+              }, e3;
+            }();
+            t2.FitAddon = r;
+          } }, t = {};
+          return function r(i) {
+            if (t[i])
+              return t[i].exports;
+            var n = t[i] = { exports: {} };
+            return e[i](n, n.exports, r), n.exports;
+          }(775);
+        })();
+      });
+    }
+  });
+
   // main.ts
   var import_xterm = __toESM(require_xterm());
+  var import_xterm_addon_fit = __toESM(require_xterm_addon_fit());
   var main = () => {
     const term = new import_xterm.Terminal();
+    const fitAddon = new import_xterm_addon_fit.FitAddon();
+    term.loadAddon(fitAddon);
     term.open(document.getElementById("terminal"));
+    fitAddon.fit();
     term.onData((data) => {
       window.webkit.messageHandlers.xtermOnData.postMessage(data);
+    });
+    window.addEventListener("resize", () => {
+      fitAddon.fit();
     });
   };
   main();

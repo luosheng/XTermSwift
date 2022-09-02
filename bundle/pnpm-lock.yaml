@@ -3,9 +3,11 @@ lockfileVersion: 5.4
 specifiers:
   esbuild: ^0.15.6
   xterm: ^4.19.0
+  xterm-addon-fit: ^0.5.0
 
 dependencies:
   xterm: 4.19.0
+  xterm-addon-fit: 0.5.0_xterm@4.19.0
 
 devDependencies:
   esbuild: 0.15.6
@@ -229,6 +231,14 @@ packages:
       esbuild-windows-64: 0.15.6
       esbuild-windows-arm64: 0.15.6
     dev: true
+
+  /xterm-addon-fit/0.5.0_xterm@4.19.0:
+    resolution: {integrity: sha512-DsS9fqhXHacEmsPxBJZvfj2la30Iz9xk+UKjhQgnYNkrUIN5CYLbw7WEfz117c7+S86S/tpHPfvNxJsF5/G8wQ==}
+    peerDependencies:
+      xterm: ^4.0.0
+    dependencies:
+      xterm: 4.19.0
+    dev: false
 
   /xterm/4.19.0:
     resolution: {integrity: sha512-c3Cp4eOVsYY5Q839dR5IejghRPpxciGmLWWaP9g+ppfMeBChMeLa1DCA+pmX/jyDZ+zxFOmlJL/82qVdayVoGQ==}
