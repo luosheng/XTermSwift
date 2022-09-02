@@ -2,6 +2,7 @@ import WebKit
 
 public protocol XTermViewDelegate {
   func onData(_ data: String)
+  func didUpdateSize(_ size: TermSize)
 }
 
 @available(macOS 12.0, *)
@@ -67,6 +68,7 @@ open class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
   
   func didUpdateSize(_ size: TermSize) {
     self.size = size
+    self.delegate?.didUpdateSize(size)
   }
   
 }
