@@ -8530,6 +8530,7 @@
   var import_xterm_addon_fit = __toESM(require_xterm_addon_fit());
   var main = () => {
     const term = new import_xterm.Terminal();
+    window.term = term;
     const fitAddon = new import_xterm_addon_fit.FitAddon();
     term.loadAddon(fitAddon);
     term.open(document.getElementById("terminal"));

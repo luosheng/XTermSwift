@@ -5,6 +5,7 @@ import 'xterm/css/xterm.css'
 
 const main = () => {
   const term = new Terminal()
+  window.term = term
   const fitAddon = new FitAddon()
   term.loadAddon(fitAddon)
   term.open(document.getElementById('terminal')!)

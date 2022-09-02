@@ -1,3 +1,4 @@
+import { Terminal } from 'xterm'
 export { }
 
 declare global {
@@ -9,5 +10,6 @@ declare global {
         }
       }
     }
+    term: Terminal
   }
 }
