@@ -21,7 +21,6 @@ let package = Package(
     .target(
       name: "XTerm",
       dependencies: [],
-      exclude: ["Resources/package.json", "Resources/package-lock.json"],
       resources: [
         .process("Resources/index.html"),
         .process("Resources/main.js"),
