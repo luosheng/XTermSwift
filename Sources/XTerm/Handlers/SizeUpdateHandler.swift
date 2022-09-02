@@ -8,13 +8,13 @@
 import Foundation
 import WebKit
 
-public struct Size {
-  var cols: Int
-  var rows: Int
+public struct TermSize {
+  public var cols: Int
+  public var rows: Int
 }
 
 protocol SizeUpdateHandlerDelegate {
-  func didUpdateSize(_ size: Size)
+  func didUpdateSize(_ size: TermSize)
 }
 
 class SizeUpdateHandler: NSObject, WKScriptMessageHandler {
@@ -27,7 +27,7 @@ class SizeUpdateHandler: NSObject, WKScriptMessageHandler {
           let rows = body["rows"] else {
       return
     }
-    self.delegate?.didUpdateSize(Size(cols: cols, rows: rows))
+    self.delegate?.didUpdateSize(TermSize(cols: cols, rows: rows))
   }
   
 }

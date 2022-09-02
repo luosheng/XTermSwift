@@ -1,16 +1,16 @@
 import WebKit
 
-protocol XTermViewDelegate {
+public protocol XTermViewDelegate {
   func onData(_ data: String)
 }
 
 @available(macOS 12.0, *)
-public class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
+open class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
   
-  public var size = Size(cols: 0, rows: 0)
+  public var size = TermSize(cols: 0, rows: 0)
+  public var delegate: XTermViewDelegate?
   
   private var webView: WKWebView!
-  var delegate: XTermViewDelegate?
   var userContentController = WKUserContentController()
   
   public override init(frame frameRect: NSRect) {
@@ -61,7 +61,7 @@ public class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
   
   // MARK: - SizeUpdateDelegate
   
-  func didUpdateSize(_ size: Size) {
+  func didUpdateSize(_ size: TermSize) {
     self.size = size
   }
   
