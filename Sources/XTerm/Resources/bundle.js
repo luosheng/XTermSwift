@@ -8536,7 +8536,7 @@
     const fitAndReport = () => {
       fitAddon.fit();
       const { cols, rows } = term;
-      window.webkit.messageHandlers.sizeUpdateHandler.postMessage(JSON.stringify({ cols, rows }));
+      window.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
     };
     fitAndReport();
     window.addEventListener("resize", fitAndReport);
