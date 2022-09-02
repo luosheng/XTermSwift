@@ -2,21 +2,13 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="bundle.css" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
-  <script src="node_modules/xterm/lib/xterm.js"></script>
 </head>
 
 <body>
   <div id="terminal"></div>
-  <script>
-    var term = new Terminal();
-    term.open(document.getElementById('terminal'))
-    term.onData(data => {
-      window.webkit.messageHandlers.xtermOnData.postMessage(data)
-    })
-  </script>
-  <script src="main.js"></script>
+  <script src="bundle.js"></script>
 </body>
 
 </html>
