@@ -26,7 +26,8 @@ let package = Package(
         .process("Resources/index.html"),
         .process("Resources/main.js"),
         .process("Resources/styles.css"),
-        .copy("Resources/node_modules")
+        .process("Resources/bundle.js"),
+        .process("Resources/bundle.css"),
       ]
     )
   ]
