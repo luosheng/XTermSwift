@@ -53,6 +53,10 @@ open class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
     self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page)
   }
   
+  public func clear() async {
+    _ = try? await self.webView.callAsyncJavaScript("term.clear()", contentWorld: .page)
+  }
+  
   // MARK: - DataHandlerDelegate
 
   func onData(_ data: String) {
