@@ -8525,132 +8525,154 @@
     }
   });
 
-  // node_modules/.pnpm/xterm-addon-web-links@0.6.0_xterm@4.19.0/node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js
-  var require_xterm_addon_web_links = __commonJS({
-    "node_modules/.pnpm/xterm-addon-web-links@0.6.0_xterm@4.19.0/node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js"(exports, module) {
-      !function(e, t) {
-        "object" == typeof exports && "object" == typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define([], t) : "object" == typeof exports ? exports.WebLinksAddon = t() : e.WebLinksAddon = t();
-      }(self, function() {
-        return (() => {
-          "use strict";
-          var e = { 6: (e2, t2) => {
-            Object.defineProperty(t2, "__esModule", { value: true }), t2.LinkComputer = t2.WebLinkProvider = void 0;
-            var i2 = function() {
-              function e3(e4, t3, i3, r3) {
-                void 0 === r3 && (r3 = {}), this._terminal = e4, this._regex = t3, this._handler = i3, this._options = r3;
-              }
-              return e3.prototype.provideLinks = function(e4, t3) {
-                var i3 = r2.computeLink(e4, this._regex, this._terminal, this._handler);
-                t3(this._addCallbacks(i3));
-              }, e3.prototype._addCallbacks = function(e4) {
-                var t3 = this;
-                return e4.map(function(e5) {
-                  return e5.leave = t3._options.leave, e5.hover = function(i3, r3) {
-                    if (t3._options.hover) {
-                      var n = e5.range;
-                      t3._options.hover(i3, r3, n);
-                    }
-                  }, e5;
-                });
-              }, e3;
-            }();
-            t2.WebLinkProvider = i2;
-            var r2 = function() {
-              function e3() {
-              }
-              return e3.computeLink = function(t3, i3, r3, n) {
-                for (var o, a = new RegExp(i3.source, (i3.flags || "") + "g"), s = e3._translateBufferLineToStringWithWrap(t3 - 1, false, r3), d = s[0], l = s[1], c = -1, u = []; null !== (o = a.exec(d)); ) {
-                  var h = o[1];
-                  if (!h) {
-                    console.log("match found without corresponding matchIndex");
-                    break;
-                  }
-                  if (c = d.indexOf(h, c + 1), a.lastIndex = c + h.length, c < 0)
-                    break;
-                  for (var v = c + h.length, f = l + 1; v > r3.cols; )
-                    v -= r3.cols, f++;
-                  for (var p = c + 1, _ = l + 1; p > r3.cols; )
-                    p -= r3.cols, _++;
-                  var k = { start: { x: p, y: _ }, end: { x: v, y: f } };
-                  u.push({ range: k, text: h, activate: n });
-                }
-                return u;
-              }, e3._translateBufferLineToStringWithWrap = function(e4, t3, i3) {
-                var r3, n, o = "";
-                do {
-                  if (!(s = i3.buffer.active.getLine(e4)))
-                    break;
-                  s.isWrapped && e4--, n = s.isWrapped;
-                } while (n);
-                var a = e4;
-                do {
-                  var s, d = i3.buffer.active.getLine(e4 + 1);
-                  if (r3 = !!d && d.isWrapped, !(s = i3.buffer.active.getLine(e4)))
-                    break;
-                  o += s.translateToString(!r3 && t3).substring(0, i3.cols), e4++;
-                } while (r3);
-                return [o, a];
-              }, e3;
-            }();
-            t2.LinkComputer = r2;
-          } }, t = {};
-          function i(r2) {
-            var n = t[r2];
-            if (void 0 !== n)
-              return n.exports;
-            var o = t[r2] = { exports: {} };
-            return e[r2](o, o.exports, i), o.exports;
-          }
-          var r = {};
-          return (() => {
-            var e2 = r;
-            Object.defineProperty(e2, "__esModule", { value: true }), e2.WebLinksAddon = void 0;
-            var t2 = i(6), n = new RegExp(`(?:^|[^\\da-z\\.-]+)((https?:\\/\\/)((([\\da-z\\.-]+)\\.([a-z\\.]{2,18}))|((\\d{1,3}\\.){3}\\d{1,3})|(localhost))(:\\d{1,5})?((\\/[\\/\\w\\.\\-%~:+@]*)*([^:"'\\s]))?(\\?[0-9\\w\\[\\]\\(\\)\\/\\?\\!#@$%&'*+,:;~\\=\\.\\-]*)?(#[0-9\\w\\[\\]\\(\\)\\/\\?\\!#@$%&'*+,:;~\\=\\.\\-]*)?)($|[^\\/\\w\\.\\-%]+)`);
-            function o(e3, t3) {
-              var i2 = window.open();
-              if (i2) {
-                try {
-                  i2.opener = null;
-                } catch (e4) {
-                }
-                i2.location.href = t3;
-              } else
-                console.warn("Opening link blocked as opener could not be cleared");
-            }
-            var a = function() {
-              function e3(e4, t3, i2) {
-                void 0 === e4 && (e4 = o), void 0 === t3 && (t3 = {}), void 0 === i2 && (i2 = false), this._handler = e4, this._options = t3, this._useLinkProvider = i2;
-              }
-              return e3.prototype.activate = function(e4) {
-                if (this._terminal = e4, this._useLinkProvider && "registerLinkProvider" in this._terminal) {
-                  var i2 = (r2 = this._options).urlRegex || n;
-                  this._linkProvider = this._terminal.registerLinkProvider(new t2.WebLinkProvider(this._terminal, i2, this._handler, r2));
-                } else {
-                  var r2;
-                  (r2 = this._options).matchIndex = 1, this._linkMatcherId = this._terminal.registerLinkMatcher(n, this._handler, r2);
-                }
-              }, e3.prototype.dispose = function() {
-                var e4;
-                void 0 !== this._linkMatcherId && void 0 !== this._terminal && this._terminal.deregisterLinkMatcher(this._linkMatcherId), null === (e4 = this._linkProvider) || void 0 === e4 || e4.dispose();
-              }, e3;
-            }();
-            e2.WebLinksAddon = a;
-          })(), r;
-        })();
-      });
-    }
-  });
-
   // main.ts
   var import_xterm = __toESM(require_xterm());
   var import_xterm_addon_fit = __toESM(require_xterm_addon_fit());
-  var import_xterm_addon_web_links = __toESM(require_xterm_addon_web_links());
+
+  // addons/WebLinkProvider.ts
+  var WebLinkProvider = class {
+    constructor(_terminal, _regex, _handler, _options = {}) {
+      this._terminal = _terminal;
+      this._regex = _regex;
+      this._handler = _handler;
+      this._options = _options;
+    }
+    provideLinks(y, callback) {
+      const links = LinkComputer.computeLink(y, this._regex, this._terminal, this._handler);
+      callback(this._addCallbacks(links));
+    }
+    _addCallbacks(links) {
+      return links.map((link) => {
+        link.leave = this._options.leave;
+        link.hover = (event, uri) => {
+          if (this._options.hover) {
+            const { range } = link;
+            this._options.hover(event, uri, range);
+          }
+        };
+        return link;
+      });
+    }
+  };
+  var LinkComputer = class {
+    static computeLink(y, regex, terminal, activate) {
+      const rex = new RegExp(regex.source, (regex.flags || "") + "g");
+      const [line, startLineIndex] = LinkComputer._translateBufferLineToStringWithWrap(y - 1, false, terminal);
+      let match;
+      let stringIndex = -1;
+      const result = [];
+      while ((match = rex.exec(line)) !== null) {
+        const text = match[1];
+        if (!text) {
+          console.log("match found without corresponding matchIndex");
+          break;
+        }
+        stringIndex = line.indexOf(text, stringIndex + 1);
+        rex.lastIndex = stringIndex + text.length;
+        if (stringIndex < 0) {
+          break;
+        }
+        let endX = stringIndex + text.length;
+        let endY = startLineIndex + 1;
+        while (endX > terminal.cols) {
+          endX -= terminal.cols;
+          endY++;
+        }
+        let startX = stringIndex + 1;
+        let startY = startLineIndex + 1;
+        while (startX > terminal.cols) {
+          startX -= terminal.cols;
+          startY++;
+        }
+        const range = {
+          start: {
+            x: startX,
+            y: startY
+          },
+          end: {
+            x: endX,
+            y: endY
+          }
+        };
+        result.push({ range, text, activate });
+      }
+      return result;
+    }
+    static _translateBufferLineToStringWithWrap(lineIndex, trimRight, terminal) {
+      let lineString = "";
+      let lineWrapsToNext;
+      let prevLinesToWrap;
+      do {
+        const line = terminal.buffer.active.getLine(lineIndex);
+        if (!line) {
+          break;
+        }
+        if (line.isWrapped) {
+          lineIndex--;
+        }
+        prevLinesToWrap = line.isWrapped;
+      } while (prevLinesToWrap);
+      const startLineIndex = lineIndex;
+      do {
+        const nextLine = terminal.buffer.active.getLine(lineIndex + 1);
+        lineWrapsToNext = nextLine ? nextLine.isWrapped : false;
+        const line = terminal.buffer.active.getLine(lineIndex);
+        if (!line) {
+          break;
+        }
+        lineString += line.translateToString(!lineWrapsToNext && trimRight).substring(0, terminal.cols);
+        lineIndex++;
+      } while (lineWrapsToNext);
+      return [lineString, startLineIndex];
+    }
+  };
+
+  // addons/WebLinksAddon.ts
+  var protocolClause = "(https?:\\/\\/)";
+  var domainCharacterSet = "[\\da-z\\.-]+";
+  var negatedDomainCharacterSet = "[^\\da-z\\.-]+";
+  var domainBodyClause = "(" + domainCharacterSet + ")";
+  var tldClause = "([a-z\\.]{2,18})";
+  var ipClause = "((\\d{1,3}\\.){3}\\d{1,3})";
+  var localHostClause = "(localhost)";
+  var portClause = "(:\\d{1,5})";
+  var hostClause = "((" + domainBodyClause + "\\." + tldClause + ")|" + ipClause + "|" + localHostClause + ")" + portClause + "?";
+  var pathCharacterSet = `(\\/[\\/\\w\\.\\-%~:+@]*)*([^:"'\\s])`;
+  var pathClause = "(" + pathCharacterSet + ")?";
+  var queryStringHashFragmentCharacterSet = "[0-9\\w\\[\\]\\(\\)\\/\\?\\!#@$%&'*+,:;~\\=\\.\\-]*";
+  var queryStringClause = "(\\?" + queryStringHashFragmentCharacterSet + ")?";
+  var hashFragmentClause = "(#" + queryStringHashFragmentCharacterSet + ")?";
+  var negatedPathCharacterSet = "[^\\/\\w\\.\\-%]+";
+  var bodyClause = hostClause + pathClause + queryStringClause + hashFragmentClause;
+  var start = "(?:^|" + negatedDomainCharacterSet + ")(";
+  var end = ")($|" + negatedPathCharacterSet + ")";
+  var strictUrlRegex = new RegExp(start + protocolClause + bodyClause + end);
+  function handleLink(event, uri) {
+    window.open(uri, "_blank");
+  }
+  var WebLinksAddon = class {
+    constructor(_handler = handleLink, _options = {}) {
+      this._handler = _handler;
+      this._options = _options;
+    }
+    activate(terminal) {
+      this._terminal = terminal;
+      const options = this._options;
+      const regex = options.urlRegex || strictUrlRegex;
+      this._linkProvider = this._terminal.registerLinkProvider(new WebLinkProvider(this._terminal, regex, this._handler, options));
+    }
+    dispose() {
+      this._linkProvider?.dispose();
+    }
+  };
+
+  // main.ts
   var main = () => {
     const term = new import_xterm.Terminal();
     window.term = term;
     const fitAddon = new import_xterm_addon_fit.FitAddon();
     term.loadAddon(fitAddon);
-    term.loadAddon(new import_xterm_addon_web_links.WebLinksAddon());
+    term.loadAddon(new WebLinksAddon());
     term.open(document.getElementById("terminal"));
     const fitAndReport = () => {
       fitAddon.fit();
@@ -8665,3 +8687,7 @@
   };
   main();
 })();
+/**
+ * Copyright (c) 2019 The xterm.js authors. All rights reserved.
+ * @license MIT
+ */

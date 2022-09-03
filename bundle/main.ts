@@ -1,6 +1,6 @@
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
-import { WebLinksAddon } from 'xterm-addon-web-links'
+import { WebLinksAddon } from './addons/WebLinksAddon'
 
 import 'xterm/css/xterm.css'
 
