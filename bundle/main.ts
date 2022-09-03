@@ -20,7 +20,7 @@ const main = () => {
   window.addEventListener('resize', fitAndReport)
 
   term.onData(data => {
-    window.webkit.messageHandlers.xtermOnData.postMessage(data)
+    window.webkit.messageHandlers.dataHandler.postMessage(data)
   })
 }
 
