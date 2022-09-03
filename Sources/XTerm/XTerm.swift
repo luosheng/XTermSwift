@@ -6,7 +6,7 @@ public protocol XTermViewDelegate {
 }
 
 @available(macOS 12.0, *)
-open class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
+open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandlerDelegate {
   
   public var size = TermSize(cols: 0, rows: 0)
   public var delegate: XTermViewDelegate?
@@ -27,10 +27,12 @@ open class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
   private func setup() {
     let configuration = WKWebViewConfiguration()
     configuration.userContentController = userContentController
+    
     self.setupHandlers()
     
     webView = WKWebView(frame: .zero, configuration: configuration)
     webView.autoresizingMask = [.width, .height]
+    webView.uiDelegate = self
     self.addSubview(webView)
     
     guard let resourceURL = Bundle.module.resourceURL else {
@@ -56,6 +58,16 @@ open class XTermView: NSView, DataHandlerDelegate, SizeUpdateHandlerDelegate {
   
   public func clear() async {
     _ = try? await self.webView.callAsyncJavaScript("term.clear()", contentWorld: .page)
+  }
+  
+  // MARK: - WKUIDelegate
+  
+  public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    guard let url = navigationAction.request.url else {
+      return nil
+    }
+    NSWorkspace.shared.open(url)
+    return nil
   }
   
   // MARK: - DataHandlerDelegate
