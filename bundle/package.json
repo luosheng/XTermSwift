@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "xterm": "^4.19.0",
-    "xterm-addon-fit": "^0.5.0"
+    "xterm-addon-fit": "^0.5.0",
+    "xterm-addon-web-links": "^0.6.0"
   },
   "devDependencies": {
     "esbuild": "^0.15.6"

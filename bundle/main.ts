@@ -1,5 +1,6 @@
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
+import { WebLinksAddon } from 'xterm-addon-web-links'
 
 import 'xterm/css/xterm.css'
 
@@ -8,6 +9,8 @@ const main = () => {
   window.term = term
   const fitAddon = new FitAddon()
   term.loadAddon(fitAddon)
+  term.loadAddon(new WebLinksAddon())
+
   term.open(document.getElementById('terminal')!)
 
   const fitAndReport = () => {

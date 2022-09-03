@@ -4,10 +4,12 @@ specifiers:
   esbuild: ^0.15.6
   xterm: ^4.19.0
   xterm-addon-fit: ^0.5.0
+  xterm-addon-web-links: ^0.6.0
 
 dependencies:
   xterm: 4.19.0
   xterm-addon-fit: 0.5.0_xterm@4.19.0
+  xterm-addon-web-links: 0.6.0_xterm@4.19.0
 
 devDependencies:
   esbuild: 0.15.6
@@ -234,6 +236,14 @@ packages:
 
   /xterm-addon-fit/0.5.0_xterm@4.19.0:
     resolution: {integrity: sha512-DsS9fqhXHacEmsPxBJZvfj2la30Iz9xk+UKjhQgnYNkrUIN5CYLbw7WEfz117c7+S86S/tpHPfvNxJsF5/G8wQ==}
+    peerDependencies:
+      xterm: ^4.0.0
+    dependencies:
+      xterm: 4.19.0
+    dev: false
+
+  /xterm-addon-web-links/0.6.0_xterm@4.19.0:
+    resolution: {integrity: sha512-H6XzjWWZu8FBo+fnYpxdPk9w5M6drbsvwPEJZGRS38MihiQaVFpKlCMKdfRgDbKGE530tw1yH54rhpZfHgt2/A==}
     peerDependencies:
       xterm: ^4.0.0
     dependencies:
