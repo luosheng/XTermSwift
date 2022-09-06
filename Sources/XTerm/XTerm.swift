@@ -60,6 +60,10 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
     _ = try? await self.webView.callAsyncJavaScript("term.clear()", contentWorld: .page)
   }
   
+  public func applyTheme(theme: Theme) async {
+    self.webView.callAsyncJavaScript("term.setOption('theme', theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
+  }
+  
   // MARK: - WKUIDelegate
   
   public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {

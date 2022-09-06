@@ -31,4 +31,9 @@ public struct Theme: Codable {
   var selection: HTMLColor?
   var white: HTMLColor?
   var yellow: HTMLColor?
+  
+  public func toJSON() -> [String : String] {
+    let encoder = JSONEncoder()
+    return (try? JSONSerialization.jsonObject(with: encoder.encode(self))) as? [String : String] ?? [:]
+  }
 }
