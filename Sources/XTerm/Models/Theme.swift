@@ -31,6 +31,18 @@ public struct Theme: Codable {
   public var selection: HTMLColor?
   public var white: HTMLColor?
   public var yellow: HTMLColor?
+}
+
+extension Theme {
+  
+  public static func from(jsonString: String) -> Theme {
+    let decoder = JSONDecoder()
+    guard let data = jsonString.data(using: .utf8),
+          let theme = try? decoder.decode(Theme.self, from: data) else {
+      return Theme()
+    }
+    return theme
+  }
   
   public func toJSON() -> [String : String] {
     let encoder = JSONEncoder()
