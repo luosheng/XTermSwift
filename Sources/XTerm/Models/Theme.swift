@@ -10,27 +10,27 @@ import Foundation
 public typealias HTMLColor = String
 
 public struct Theme: Codable {
-  var background: HTMLColor?
-  var black: HTMLColor?
-  var blue: HTMLColor?
-  var brightBlack: HTMLColor?
-  var brightBlue: HTMLColor?
-  var brightCyan: HTMLColor?
-  var brightGreen: HTMLColor?
-  var brightMagenta: HTMLColor?
-  var brightRed: HTMLColor?
-  var brightWhite: HTMLColor?
-  var brightYellow: HTMLColor?
-  var cursor: HTMLColor?
-  var cursorAccent: HTMLColor?
-  var cyan: HTMLColor?
-  var foreground: HTMLColor?
-  var green: HTMLColor?
-  var magenta: HTMLColor?
-  var red: HTMLColor?
-  var selection: HTMLColor?
-  var white: HTMLColor?
-  var yellow: HTMLColor?
+  public var background: HTMLColor?
+  public var black: HTMLColor?
+  public var blue: HTMLColor?
+  public var brightBlack: HTMLColor?
+  public var brightBlue: HTMLColor?
+  public var brightCyan: HTMLColor?
+  public var brightGreen: HTMLColor?
+  public var brightMagenta: HTMLColor?
+  public var brightRed: HTMLColor?
+  public var brightWhite: HTMLColor?
+  public var brightYellow: HTMLColor?
+  public var cursor: HTMLColor?
+  public var cursorAccent: HTMLColor?
+  public var cyan: HTMLColor?
+  public var foreground: HTMLColor?
+  public var green: HTMLColor?
+  public var magenta: HTMLColor?
+  public var red: HTMLColor?
+  public var selection: HTMLColor?
+  public var white: HTMLColor?
+  public var yellow: HTMLColor?
   
   public func toJSON() -> [String : String] {
     let encoder = JSONEncoder()
