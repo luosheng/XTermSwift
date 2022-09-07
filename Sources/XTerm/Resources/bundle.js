@@ -8684,6 +8684,7 @@
     term.onData((data) => {
       window.webkit.messageHandlers.dataHandler.postMessage(data);
     });
+    window.webkit.messageHandlers.readyHandler.postMessage(null);
   };
   main();
 })();
