@@ -12,8 +12,13 @@ protocol DataHandlerDelegate {
   func onData(_ data: String)
 }
 
-class DataHandler: NSObject, WKScriptMessageHandler {
+class DataHandler: NSObject, BaseHandler {
+  
   var delegate: DataHandlerDelegate?
+  
+  func getName() -> String {
+    return "dataHandler"
+  }
   
   func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     guard let body = message.body as? String else {

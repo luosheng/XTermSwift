@@ -17,9 +17,13 @@ protocol SizeUpdateHandlerDelegate {
   func didUpdateSize(_ size: TermSize)
 }
 
-class SizeUpdateHandler: NSObject, WKScriptMessageHandler {
+class SizeUpdateHandler: NSObject, BaseHandler {
   
   var delegate: SizeUpdateHandlerDelegate?
+  
+  func getName() -> String {
+    return "sizeUpdateHandler"
+  }
   
   func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     guard let body = message.body as? Dictionary<String, Int>,
