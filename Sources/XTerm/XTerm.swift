@@ -43,12 +43,10 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   }
   
   private func setupHandlers() {
-    let dataHandler = DataHandler()
-    dataHandler.delegate = self
+    let dataHandler = DataHandler(with: self)
     self.userContentController.add(dataHandler, name: dataHandler.getName())
     
-    let sizeUpdateHandler = SizeUpdateHandler()
-    sizeUpdateHandler.delegate = self
+    let sizeUpdateHandler = SizeUpdateHandler(with: self)
     self.userContentController.add(sizeUpdateHandler, name: sizeUpdateHandler.getName())
   }
   

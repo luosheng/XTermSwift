@@ -13,8 +13,11 @@ protocol DataHandlerDelegate {
 }
 
 class DataHandler: NSObject, BaseHandler {
-  
   var delegate: DataHandlerDelegate?
+  
+  required init(with delegate: DataHandlerDelegate?) {
+    self.delegate = delegate
+  }
   
   func getName() -> String {
     return "dataHandler"

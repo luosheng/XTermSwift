@@ -21,6 +21,10 @@ class SizeUpdateHandler: NSObject, BaseHandler {
   
   var delegate: SizeUpdateHandlerDelegate?
   
+  required init(with delegate: SizeUpdateHandlerDelegate?) {
+    self.delegate = delegate
+  }
+  
   func getName() -> String {
     return "sizeUpdateHandler"
   }

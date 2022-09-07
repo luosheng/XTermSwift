@@ -9,5 +9,7 @@ import Foundation
 import WebKit
 
 protocol BaseHandler: WKScriptMessageHandler {
+  associatedtype T
+  init(with delegate: T)
   func getName() -> String
 }
