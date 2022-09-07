@@ -28,6 +28,7 @@ let package = Package(
         .process("Resources/bundle.js"),
         .process("Resources/bundle.css"),
       ]
-    )
+    ),
+    .testTarget(name: "XTermTests", dependencies: ["XTerm"])
   ]
 )
