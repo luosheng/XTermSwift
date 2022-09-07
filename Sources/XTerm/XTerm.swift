@@ -14,6 +14,7 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   private var webView: WKWebView!
   private var userContentController = WKUserContentController()
   private var ready = false
+  private var pendingTasks: [() -> Void] = []
   
   public override init(frame frameRect: NSRect) {
     super.init(frame: .zero)
@@ -54,16 +55,32 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
     self.userContentController.add(readyHandler, name: readyHandler.getName())
   }
   
+  private func execute(_ task: @escaping () -> Void) {
+    if self.ready {
+      task()
+    } else {
+      pendingTasks.append(task)
+    }
+  }
+  
   public func write(_ data: String) async {
-    self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page)
+    execute {
+      self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page)
+    }
   }
   
   public func clear() async {
-    _ = try? await self.webView.callAsyncJavaScript("term.clear()", contentWorld: .page)
+    execute {
+      Task {
+        self.webView.callAsyncJavaScript("term.clear()", arguments: [:], in: nil, in: .page)
+      }
+    }
   }
   
   public func applyTheme(theme: Theme) async {
-    self.webView.callAsyncJavaScript("term.setOption('theme', theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
+    execute {
+      self.webView.callAsyncJavaScript("term.setOption('theme', theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
+    }
   }
   
   // MARK: - WKUIDelegate
@@ -93,6 +110,9 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   
   func onReady() {
     self.ready = true
+    self.pendingTasks.forEach { task in
+      task()
+    }
   }
   
 }
