@@ -6,13 +6,14 @@ public protocol XTermViewDelegate {
 }
 
 @available(macOS 12.0, *)
-open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandlerDelegate {
+open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandlerDelegate, ReadyHandlerDelegate {
   
   public var size = TermSize(cols: 0, rows: 0)
   public var delegate: XTermViewDelegate?
   
   private var webView: WKWebView!
-  var userContentController = WKUserContentController()
+  private var userContentController = WKUserContentController()
+  private var ready = false
   
   public override init(frame frameRect: NSRect) {
     super.init(frame: .zero)
@@ -48,6 +49,9 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
     
     let sizeUpdateHandler = SizeUpdateHandler(with: self)
     self.userContentController.add(sizeUpdateHandler, name: sizeUpdateHandler.getName())
+    
+    let readyHandler = ReadyHandler(with: self)
+    self.userContentController.add(readyHandler, name: readyHandler.getName())
   }
   
   public func write(_ data: String) async {
@@ -78,11 +82,17 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
     delegate?.onData(data)
   }
   
-  // MARK: - SizeUpdateDelegate
+  // MARK: - SizeUpdateHandlerDelegate
   
   func didUpdateSize(_ size: TermSize) {
     self.size = size
     self.delegate?.didUpdateSize(size)
+  }
+  
+  // MARK: - ReadyHandlerDelegate
+  
+  func onReady() {
+    self.ready = true
   }
   
 }
