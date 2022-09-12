@@ -56,13 +56,13 @@ extension Theme {
 
 extension Theme {
   
-  public static func fromVSCode(jsonString: String) -> Theme {
-    var theme = Theme()
-    guard let data = jsonString.data(using: .utf8),
-          let object = try? JSONSerialization.jsonObject(with: data) as? [String : [String : String]],
+  private static func fromVSCodeData(data: Data) -> Theme? {
+    guard let object = try? JSONSerialization.jsonObject(with: data) as? [String : [String : String]],
           let colors = object["workbench.colorCustomizations"] else {
-      return theme
+      return nil
     }
+    
+    var theme = Theme()
     
     theme.foreground = colors["terminal.foreground"]
     theme.background = colors["terminal.background"]
@@ -88,4 +88,26 @@ extension Theme {
     return theme
   }
   
+  private static func fromVSCodeBundle(forResource resource: String, withExtension: String) -> Theme {
+    guard let url = Bundle.module.url(forResource: resource, withExtension: withExtension),
+          let data = try? Data(contentsOf: url),
+          let theme = Theme.fromVSCodeData(data: data) else {
+      return Theme()
+    }
+    return theme
+  }
+  
+  public static func fromVSCode(jsonString: String) -> Theme {
+    guard let data = jsonString.data(using: .utf8),
+          let theme = Theme.fromVSCodeData(data: data) else {
+      return Theme()
+    }
+    return theme
+  }
+  
+}
+
+extension Theme {
+  public static var defaultLight = Theme.fromVSCodeBundle(forResource: "theme.light", withExtension: "json")
+  public static var defaultDark = Theme.fromVSCodeBundle(forResource: "theme.dark", withExtension: "json")
 }

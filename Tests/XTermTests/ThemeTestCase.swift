@@ -63,4 +63,9 @@ final class ThemeTestCase: XCTestCase {
     XCTAssertEqual(theme.white, "#ffffff")
     XCTAssertEqual(theme.selection, "#1f2233")
   }
+  
+  func testDefaultColors() throws {
+    XCTAssertEqual(Theme.defaultLight.background, "#ffffff")
+    XCTAssertEqual(Theme.defaultDark.background, "#000000")
+  }
 }

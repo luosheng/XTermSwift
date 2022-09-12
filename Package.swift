@@ -27,6 +27,8 @@ let package = Package(
         .process("Resources/styles.css"),
         .process("Resources/bundle.js"),
         .process("Resources/bundle.css"),
+        .process("Resources/theme.dark.json"),
+        .process("Resources/theme.light.json"),
       ]
     ),
     .testTarget(name: "XTermTests", dependencies: ["XTerm"])
