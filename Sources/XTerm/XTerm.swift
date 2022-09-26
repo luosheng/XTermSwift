@@ -42,6 +42,10 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
     }
     let indexURL = resourceURL.appendingPathComponent("index.html")
     webView.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
+    
+    Task {
+      await setFont()
+    }
   }
   
   private func setupHandlers() {
@@ -80,6 +84,20 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   public func applyTheme(theme: Theme) async {
     execute {
       self.webView.callAsyncJavaScript("term.setOption('theme', theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
+    }
+  }
+  
+  private func setFont() async {
+    execute {
+      self.webView.callAsyncJavaScript(
+        "term.setOption('fontFamily', fontFamily);term.setOption('fontSize', fontSize)",
+        arguments: [
+          "fontFamily": "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
+          "fontSize": 13,
+        ],
+        in: nil,
+        in: .page
+      )
     }
   }
   
