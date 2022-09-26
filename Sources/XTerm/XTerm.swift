@@ -69,7 +69,7 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   
   public func write(_ data: String) async {
     execute {
-      self.webView.callAsyncJavaScript("term.write(data)", arguments: ["data": data], in: nil, in: .page)
+      self.webView.callAsyncJavaScript("termHelper.write(data)", arguments: ["data": data], in: nil, in: .page)
     }
   }
   

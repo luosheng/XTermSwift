@@ -8675,6 +8675,13 @@
       this.term.options.theme = theme;
       window.document.body.setAttribute("style", `background-color: ${theme.background ?? "#FFFFFF"}`);
     }
+    async write(data) {
+      return new Promise((resolve) => {
+        this.term.write(data, () => {
+          resolve();
+        });
+      });
+    }
   };
 
   // main.ts
