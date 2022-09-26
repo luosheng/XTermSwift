@@ -8666,10 +8666,22 @@
     }
   };
 
+  // term-helper.ts
+  var TermHelper = class {
+    constructor(term) {
+      this.term = term;
+    }
+    applyTheme(theme) {
+      this.term.options.theme = theme;
+      window.document.body.setAttribute("style", `background-color: ${theme.background ?? "#FFFFFF"}`);
+    }
+  };
+
   // main.ts
   var main = () => {
     const term = new import_xterm.Terminal();
     window.term = term;
+    window.termHelper = new TermHelper(term);
     const fitAddon = new import_xterm_addon_fit.FitAddon();
     term.loadAddon(fitAddon);
     term.loadAddon(new WebLinksAddon());

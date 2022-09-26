@@ -83,7 +83,7 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   
   public func applyTheme(theme: Theme) async {
     execute {
-      self.webView.callAsyncJavaScript("term.setOption('theme', theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
+      self.webView.callAsyncJavaScript("termHelper.applyTheme(theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
     }
   }
   

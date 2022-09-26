@@ -1,12 +1,16 @@
-import { Terminal } from 'xterm'
+import { ITheme, Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { WebLinksAddon } from './addons/WebLinksAddon'
+import { TermHelper } from './term-helper'
 
 import 'xterm/css/xterm.css'
 
 const main = () => {
   const term = new Terminal()
   window.term = term
+
+  window.termHelper = new TermHelper(term)
+
   const fitAddon = new FitAddon()
   term.loadAddon(fitAddon)
   term.loadAddon(new WebLinksAddon())
