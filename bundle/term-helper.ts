@@ -15,7 +15,7 @@ export class TermHelper {
   async write(data: string) {
     return new Promise(resolve => {
       this.term.write(data, () => {
-        resolve()
+        resolve(void 0)
       })
     })
   }

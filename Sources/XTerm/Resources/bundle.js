@@ -8678,7 +8678,7 @@
     async write(data) {
       return new Promise((resolve) => {
         this.term.write(data, () => {
-          resolve();
+          resolve(void 0);
         });
       });
     }
