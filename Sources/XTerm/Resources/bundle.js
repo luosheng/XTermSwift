@@ -8685,6 +8685,11 @@
       this.term.options.theme = theme;
       window.document.body.setAttribute("style", `background-color: ${theme.background ?? "#FFFFFF"}`);
     }
+    setFont(fontFamily, fontSize) {
+      this.term.options.fontFamily = fontFamily;
+      this.term.options.fontSize = fontSize;
+      this.requestSizeFit();
+    }
     async write(data) {
       return new Promise((resolve) => {
         this.term.write(data, () => {

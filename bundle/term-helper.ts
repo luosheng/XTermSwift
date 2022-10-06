@@ -27,6 +27,12 @@ export class TermHelper {
     window.document.body.setAttribute('style', `background-color: ${theme.background ?? '#FFFFFF'}`)
   }
 
+  setFont(fontFamily: string, fontSize: number) {
+    this.term.options.fontFamily = fontFamily
+    this.term.options.fontSize = fontSize
+    this.requestSizeFit()
+  }
+
   async write(data: string) {
     return new Promise(resolve => {
       this.term.write(data, () => {

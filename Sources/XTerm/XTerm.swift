@@ -89,7 +89,7 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   private func setFont() async {
     execute {
       self.webView.callAsyncJavaScript(
-        "term.setOption('fontFamily', fontFamily);term.setOption('fontSize', fontSize);termHelper.requestSizeFit();",
+        "termHelper.setFont(fontFamily, fontSize)",
         arguments: [
           "fontFamily": "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
           "fontSize": 13,
