@@ -68,28 +68,28 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
   
   public func write(_ data: String) async {
     execute {
-      self.webView.callAsyncJavaScript("termHelper.write(data)", arguments: ["data": data], in: nil, in: .page)
+      self.webView.callAsyncJavaScript("terminal.write(data)", arguments: ["data": data], in: nil, in: .page)
     }
   }
   
   public func clear() async {
     execute {
       Task {
-        self.webView.callAsyncJavaScript("term.clear()", arguments: [:], in: nil, in: .page)
+        self.webView.callAsyncJavaScript("terminal.clear()", arguments: [:], in: nil, in: .page)
       }
     }
   }
   
   public func applyTheme(theme: Theme) async {
     execute {
-      self.webView.callAsyncJavaScript("termHelper.applyTheme(theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
+      self.webView.callAsyncJavaScript("terminal.applyTheme(theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
     }
   }
   
   private func setFont() async {
     execute {
       self.webView.callAsyncJavaScript(
-        "termHelper.setFont(fontFamily, fontSize)",
+        "terminal.setFont(fontFamily, fontSize)",
         arguments: [
           "fontFamily": "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
           "fontSize": 13,

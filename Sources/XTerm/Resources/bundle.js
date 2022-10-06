@@ -8667,7 +8667,7 @@
   };
 
   // term-helper.ts
-  var TermHelper = class {
+  var TermWrapper = class {
     constructor(dom) {
       this.term = new import_xterm.Terminal();
       this.fitAddon = new import_xterm_addon_fit.FitAddon();
@@ -8702,11 +8702,14 @@
       const { cols, rows } = this.term;
       globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
     }
+    async clear() {
+      this.term.clear();
+    }
   };
 
   // main.ts
   var main = () => {
-    globalThis.termHelper = new TermHelper(document.getElementById("terminal"));
+    globalThis.terminal = new TermWrapper(document.getElementById("terminal"));
   };
   main();
 })();

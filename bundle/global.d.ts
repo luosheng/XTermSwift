@@ -1,5 +1,5 @@
 import { Terminal } from 'xterm'
-import { TermHelper } from './term-helper'
+import { TermWrapper } from './term-helper'
 export { }
 
 declare global {
@@ -11,7 +11,6 @@ declare global {
         }
       }
     }
-    term: Terminal
-    termHelper: TermHelper
+    terminal: TermWrapper
   }
 }

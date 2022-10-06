@@ -1,7 +1,7 @@
 import { ITheme, Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { WebLinksAddon } from './addons/WebLinksAddon'
-export class TermHelper {
+export class TermWrapper {
   private term = new Terminal()
   private fitAddon = new FitAddon()
 
@@ -13,7 +13,6 @@ export class TermHelper {
 
     this.requestSizeFit()
     window.addEventListener('resize', this.requestSizeFit.bind(this))
-
 
     this.term.onData(data => {
       globalThis.webkit.messageHandlers.dataHandler.postMessage(data)
@@ -45,5 +44,9 @@ export class TermHelper {
     this.fitAddon.fit()
     const { cols, rows } = this.term
     globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows })
+  }
+
+  async clear() {
+    this.term.clear()
   }
 }
