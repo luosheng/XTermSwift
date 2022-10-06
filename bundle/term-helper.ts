@@ -1,15 +1,25 @@
 import { ITheme, Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
+import { WebLinksAddon } from './addons/WebLinksAddon'
 export class TermHelper {
-  private term: Terminal
+  private term = new Terminal()
   private fitAddon = new FitAddon()
 
-  constructor(term: Terminal) {
-    this.term = term
+  constructor(dom: HTMLElement) {
     this.term.loadAddon(this.fitAddon)
+    this.term.loadAddon(new WebLinksAddon())
+
+    this.term.open(dom)
 
     this.requestSizeFit()
     window.addEventListener('resize', this.requestSizeFit.bind(this))
+
+
+    this.term.onData(data => {
+      globalThis.webkit.messageHandlers.dataHandler.postMessage(data)
+    })
+
+    globalThis.webkit.messageHandlers.readyHandler.postMessage(null)
   }
 
   applyTheme(theme: ITheme) {
@@ -28,6 +38,6 @@ export class TermHelper {
   async requestSizeFit() {
     this.fitAddon.fit()
     const { cols, rows } = this.term
-    window.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows })
+    globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows })
   }
 }

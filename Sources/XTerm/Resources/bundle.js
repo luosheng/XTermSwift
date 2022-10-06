@@ -8525,8 +8525,9 @@
     }
   });
 
-  // main.ts
+  // term-helper.ts
   var import_xterm = __toESM(require_xterm());
+  var import_xterm_addon_fit = __toESM(require_xterm_addon_fit());
 
   // addons/WebLinkProvider.ts
   var WebLinkProvider = class {
@@ -8666,14 +8667,19 @@
   };
 
   // term-helper.ts
-  var import_xterm_addon_fit = __toESM(require_xterm_addon_fit());
   var TermHelper = class {
-    constructor(term) {
+    constructor(dom) {
+      this.term = new import_xterm.Terminal();
       this.fitAddon = new import_xterm_addon_fit.FitAddon();
-      this.term = term;
       this.term.loadAddon(this.fitAddon);
+      this.term.loadAddon(new WebLinksAddon());
+      this.term.open(dom);
       this.requestSizeFit();
       window.addEventListener("resize", this.requestSizeFit.bind(this));
+      this.term.onData((data) => {
+        globalThis.webkit.messageHandlers.dataHandler.postMessage(data);
+      });
+      globalThis.webkit.messageHandlers.readyHandler.postMessage(null);
     }
     applyTheme(theme) {
       this.term.options.theme = theme;
@@ -8689,21 +8695,13 @@
     async requestSizeFit() {
       this.fitAddon.fit();
       const { cols, rows } = this.term;
-      window.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
+      globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
     }
   };
 
   // main.ts
   var main = () => {
-    const term = new import_xterm.Terminal();
-    window.term = term;
-    window.termHelper = new TermHelper(term);
-    term.loadAddon(new WebLinksAddon());
-    term.open(document.getElementById("terminal"));
-    term.onData((data) => {
-      window.webkit.messageHandlers.dataHandler.postMessage(data);
-    });
-    window.webkit.messageHandlers.readyHandler.postMessage(null);
+    globalThis.termHelper = new TermHelper(document.getElementById("terminal"));
   };
   main();
 })();
