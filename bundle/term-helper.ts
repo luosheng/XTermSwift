@@ -47,6 +47,7 @@ export class TermWrapper {
   }
 
   async clear() {
+    this.term.reset()
     this.term.clear()
   }
 }

@@ -6733,6 +6733,7 @@ WARNING: This link could potentially be dangerous`)) {
       globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
     }
     async clear() {
+      this.term.reset();
       this.term.clear();
     }
   };
