@@ -1,4 +1,4 @@
-/* node_modules/.pnpm/xterm@4.19.0/node_modules/xterm/css/xterm.css */
+/* node_modules/.pnpm/xterm@5.3.0/node_modules/xterm/css/xterm.css */
 .xterm {
   cursor: text;
   position: relative;
@@ -89,6 +89,7 @@
   right: 0;
   z-index: 10;
   color: transparent;
+  pointer-events: none;
 }
 .xterm .live-region {
   position: absolute;
@@ -98,10 +99,40 @@
   overflow: hidden;
 }
 .xterm-dim {
-  opacity: 0.5;
+  opacity: 1 !important;
 }
-.xterm-underline {
+.xterm-underline-1 {
   text-decoration: underline;
+}
+.xterm-underline-2 {
+  text-decoration: double underline;
+}
+.xterm-underline-3 {
+  text-decoration: wavy underline;
+}
+.xterm-underline-4 {
+  text-decoration: dotted underline;
+}
+.xterm-underline-5 {
+  text-decoration: dashed underline;
+}
+.xterm-overline {
+  text-decoration: overline;
+}
+.xterm-overline.xterm-underline-1 {
+  text-decoration: overline underline;
+}
+.xterm-overline.xterm-underline-2 {
+  text-decoration: overline double underline;
+}
+.xterm-overline.xterm-underline-3 {
+  text-decoration: overline wavy underline;
+}
+.xterm-overline.xterm-underline-4 {
+  text-decoration: overline dotted underline;
+}
+.xterm-overline.xterm-underline-5 {
+  text-decoration: overline dashed underline;
 }
 .xterm-strikethrough {
   text-decoration: line-through;
@@ -110,8 +141,11 @@
   z-index: 6;
   position: absolute;
 }
-.xterm-decoration-overview-ruler {
+.xterm-screen .xterm-decoration-container .xterm-decoration.xterm-decoration-top-layer {
   z-index: 7;
+}
+.xterm-decoration-overview-ruler {
+  z-index: 8;
   position: absolute;
   top: 0;
   right: 0;
