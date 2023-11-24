@@ -83,7 +83,7 @@ extension Theme {
     theme.brightWhite = colors["terminal.ansiBrightWhite"]
     theme.brightYellow = colors["terminal.ansiBrightYellow"]
     theme.selection = colors["terminal.selectionBackground"]
-    theme.cursor = colors["terminalCursor.foreground"]
+    theme.cursor = colors["terminalCursor.foreground"] ?? theme.foreground
     
     return theme
   }
