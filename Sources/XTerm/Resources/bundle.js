@@ -6705,7 +6705,12 @@ WARNING: This link could potentially be dangerous`)) {
       this.term.loadAddon(new WebLinksAddon());
       this.term.open(dom);
       this.requestSizeFit();
-      window.addEventListener("resize", this.requestSizeFit.bind(this));
+      window.addEventListener("resize", () => {
+        if (this.timeout) {
+          window.cancelAnimationFrame(this.timeout);
+        }
+        this.timeout = window.requestAnimationFrame(this.requestSizeFit.bind(this));
+      }, false);
       this.term.onData((data) => {
         globalThis.webkit.messageHandlers.dataHandler.postMessage(data);
       });

@@ -4,6 +4,7 @@ import { WebLinksAddon } from './addons/WebLinksAddon'
 export class TermWrapper {
   private term = new Terminal()
   private fitAddon = new FitAddon()
+  private timeout: number
 
   constructor(dom: HTMLElement) {
     this.term.loadAddon(this.fitAddon)
@@ -12,7 +13,12 @@ export class TermWrapper {
     this.term.open(dom)
 
     this.requestSizeFit()
-    window.addEventListener('resize', this.requestSizeFit.bind(this))
+    window.addEventListener('resize', () => {
+      if (this.timeout) {
+        window.cancelAnimationFrame(this.timeout)
+      }
+      this.timeout = window.requestAnimationFrame(this.requestSizeFit.bind(this))
+    }, false)
 
     this.term.onData(data => {
       globalThis.webkit.messageHandlers.dataHandler.postMessage(data)
