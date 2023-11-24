@@ -28,7 +28,7 @@ public struct Theme: Codable {
   public var green: HTMLColor?
   public var magenta: HTMLColor?
   public var red: HTMLColor?
-  public var selection: HTMLColor?
+  public var selectionBackground: HTMLColor?
   public var white: HTMLColor?
   public var yellow: HTMLColor?
 }
@@ -82,7 +82,7 @@ extension Theme {
     theme.brightRed = colors["terminal.ansiBrightRed"]
     theme.brightWhite = colors["terminal.ansiBrightWhite"]
     theme.brightYellow = colors["terminal.ansiBrightYellow"]
-    theme.selection = colors["terminal.selectionBackground"]
+    theme.selectionBackground = colors["terminal.selectionBackground"] ?? colors["selection.background"]
     theme.cursor = colors["terminalCursor.foreground"] ?? theme.foreground
     
     return theme
