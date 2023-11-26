@@ -6704,13 +6704,12 @@ WARNING: This link could potentially be dangerous`)) {
       this.term.loadAddon(this.fitAddon);
       this.term.loadAddon(new WebLinksAddon());
       this.term.open(dom);
-      this.requestSizeFit();
-      window.addEventListener("resize", () => {
-        if (this.timeout) {
-          window.cancelAnimationFrame(this.timeout);
-        }
-        this.timeout = window.requestAnimationFrame(this.requestSizeFit.bind(this));
-      }, false);
+      this.fitAddon.fit();
+      this.term.onResize(({ cols, rows }) => {
+        globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
+      });
+      let resizeObserver = new ResizeObserver(this.requestSizeFit.bind(this));
+      resizeObserver.observe(dom);
       this.term.onData((data) => {
         globalThis.webkit.messageHandlers.dataHandler.postMessage(data);
       });
@@ -6734,8 +6733,6 @@ WARNING: This link could potentially be dangerous`)) {
     }
     async requestSizeFit() {
       this.fitAddon.fit();
-      const { cols, rows } = this.term;
-      globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
     }
     async clear() {
       this.term.reset();

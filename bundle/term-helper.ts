@@ -12,13 +12,12 @@ export class TermWrapper {
 
     this.term.open(dom)
 
-    this.requestSizeFit()
-    window.addEventListener('resize', () => {
-      if (this.timeout) {
-        window.cancelAnimationFrame(this.timeout)
-      }
-      this.timeout = window.requestAnimationFrame(this.requestSizeFit.bind(this))
-    }, false)
+    this.fitAddon.fit()
+    this.term.onResize(({ cols, rows }) => {
+      globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows })
+    })
+    let resizeObserver = new ResizeObserver(this.requestSizeFit.bind(this))
+    resizeObserver.observe(dom)
 
     this.term.onData(data => {
       globalThis.webkit.messageHandlers.dataHandler.postMessage(data)
@@ -48,8 +47,6 @@ export class TermWrapper {
 
   async requestSizeFit() {
     this.fitAddon.fit()
-    const { cols, rows } = this.term
-    globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows })
   }
 
   async clear() {
