@@ -6,58 +6,55 @@ public protocol XTermViewDelegate {
 }
 
 @available(macOS 12.0, *)
-open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandlerDelegate, ReadyHandlerDelegate {
-  
+open class XTermView: WKWebView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandlerDelegate,
+  ReadyHandlerDelegate
+{
+
   public var size = TermSize(cols: 0, rows: 0)
   public var delegate: XTermViewDelegate?
-  
-  private var webView: WKWebView!
+
   private var userContentController = WKUserContentController()
   private var ready = false
   private var pendingTasks: [() -> Void] = []
-  
-  public override init(frame frameRect: NSRect) {
-    super.init(frame: .zero)
-    setup()
-  }
-  
-  public required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    setup()
-  }
-  
-  private func setup() {
+
+  public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
     let configuration = WKWebViewConfiguration()
     configuration.userContentController = userContentController
-    
+    super.init(frame: .zero, configuration: configuration)
+    setup()
+  }
+
+  public required init?(coder: NSCoder) {
+    return nil
+  }
+
+  private func setup() {
     self.setupHandlers()
-    
-    webView = WKWebView(frame: .zero, configuration: configuration)
-    webView.autoresizingMask = [.width, .height]
-    webView.uiDelegate = self
-    self.addSubview(webView)
-    
+
+    self.autoresizingMask = [.width, .height]
+    self.uiDelegate = self
+
     guard let resourceURL = Bundle.module.resourceURL else {
       return
     }
     let indexURL = resourceURL.appendingPathComponent("index.html")
-    webView.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
-    
+    self.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
+
     Task {
       await setFont()
     }
   }
-  
+
   private func setupHandlers() {
     self.addHandler(ReadyHandler(with: self))
     self.addHandler(SizeUpdateHandler(with: self))
     self.addHandler(DataHandler(with: self))
   }
-  
+
   private func addHandler(_ handler: any BaseHandler) {
     self.userContentController.add(handler, name: handler.getName())
   }
-  
+
   private func execute(_ task: @escaping () -> Void) {
     if self.ready {
       task()
@@ -65,33 +62,36 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
       pendingTasks.append(task)
     }
   }
-  
+
   public func write(_ data: String) async {
     execute {
-      self.webView.callAsyncJavaScript("terminal.write(data)", arguments: ["data": data], in: nil, in: .page)
+      self.callAsyncJavaScript(
+        "terminal.write(data)", arguments: ["data": data], in: nil, in: .page)
     }
   }
-  
+
   public func clear() async {
     execute {
       Task {
-        self.webView.callAsyncJavaScript("terminal.clear()", arguments: [:], in: nil, in: .page)
+        self.callAsyncJavaScript("terminal.clear()", arguments: [:], in: nil, in: .page)
       }
     }
   }
-  
+
   public func applyTheme(theme: Theme) async {
     execute {
-      self.webView.callAsyncJavaScript("terminal.applyTheme(theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
+      self.callAsyncJavaScript(
+        "terminal.applyTheme(theme)", arguments: ["theme": theme.toJSON()], in: nil, in: .page)
     }
   }
-  
+
   private func setFont() async {
     execute {
-      self.webView.callAsyncJavaScript(
+      self.callAsyncJavaScript(
         "terminal.setFont(fontFamily, fontSize)",
         arguments: [
-          "fontFamily": "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
+          "fontFamily":
+            "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
           "fontSize": 13,
         ],
         in: nil,
@@ -99,37 +99,40 @@ open class XTermView: NSView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHandl
       )
     }
   }
-  
+
   // MARK: - WKUIDelegate
-  
-  public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+
+  public func webView(
+    _ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
+    for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures
+  ) -> WKWebView? {
     guard let url = navigationAction.request.url else {
       return nil
     }
     NSWorkspace.shared.open(url)
     return nil
   }
-  
+
   // MARK: - DataHandlerDelegate
 
   func onData(_ data: String) {
     delegate?.onData(data)
   }
-  
+
   // MARK: - SizeUpdateHandlerDelegate
-  
+
   func didUpdateSize(_ size: TermSize) {
     self.size = size
     self.delegate?.didUpdateSize(size)
   }
-  
+
   // MARK: - ReadyHandlerDelegate
-  
+
   func onReady() {
     self.ready = true
     self.pendingTasks.forEach { task in
       task()
     }
   }
-  
+
 }
