@@ -41,7 +41,9 @@ open class XTermView: WKWebView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHa
     self.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
 
     Task {
-      await setFont()
+      await setFont(
+        fontFamily:
+          "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace")
     }
   }
 
@@ -85,15 +87,11 @@ open class XTermView: WKWebView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHa
     }
   }
 
-  private func setFont() async {
+  public func setFont(fontFamily: String, fontSize: Int = 13) async {
     execute {
       self.callAsyncJavaScript(
         "terminal.setFont(fontFamily, fontSize)",
-        arguments: [
-          "fontFamily":
-            "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
-          "fontSize": 13,
-        ],
+        arguments: ["fontFamily": fontFamily, "fontSize": fontSize],
         in: nil,
         in: .page
       )
