@@ -17,20 +17,19 @@ open class XTermView: WKWebView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHa
   private var ready = false
   private var pendingTasks: [() -> Void] = []
 
-  public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
+  public init(theme: Theme) {
     let configuration = WKWebViewConfiguration()
     configuration.userContentController = userContentController
     super.init(frame: .zero, configuration: configuration)
-    setup()
+    setup(theme: theme)
   }
 
   public required init?(coder: NSCoder) {
-    return nil
+    fatalError("init(coder:) has not been implemented")
   }
 
-  private func setup() {
+  private func setup(theme: Theme) {
     self.setupHandlers()
-
     self.autoresizingMask = [.width, .height]
     self.uiDelegate = self
 
@@ -38,7 +37,9 @@ open class XTermView: WKWebView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHa
       return
     }
     let indexURL = resourceURL.appendingPathComponent("index.html")
-    self.loadFileRequest(URLRequest(url: indexURL), allowingReadAccessTo: resourceURL)
+    let indexURLWithHash = URL(
+      string: theme.background ?? "#FFFFFF", relativeTo: indexURL)!
+    self.loadFileRequest(URLRequest(url: indexURLWithHash), allowingReadAccessTo: resourceURL)
 
     Task {
       await setFont(

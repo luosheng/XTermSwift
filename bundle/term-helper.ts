@@ -2,11 +2,14 @@ import { ITheme, Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { WebLinksAddon } from './addons/WebLinksAddon'
 export class TermWrapper {
-  private term = new Terminal()
+  private term: Terminal
   private fitAddon = new FitAddon()
   private timeout: number
 
-  constructor(dom: HTMLElement) {
+  constructor(dom: HTMLElement, theme?: ITheme) {
+    this.term = new Terminal({
+      theme,
+    })
     this.term.loadAddon(this.fitAddon)
     this.term.loadAddon(new WebLinksAddon())
 

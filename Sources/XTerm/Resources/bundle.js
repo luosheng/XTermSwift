@@ -6698,9 +6698,11 @@ WARNING: This link could potentially be dangerous`)) {
 
   // term-helper.ts
   var TermWrapper = class {
-    constructor(dom) {
-      this.term = new import_xterm.Terminal();
+    constructor(dom, theme) {
       this.fitAddon = new import_xterm_addon_fit.FitAddon();
+      this.term = new import_xterm.Terminal({
+        theme
+      });
       this.term.loadAddon(this.fitAddon);
       this.term.loadAddon(new WebLinksAddon());
       this.term.open(dom);
@@ -6742,7 +6744,10 @@ WARNING: This link could potentially be dangerous`)) {
 
   // main.ts
   var main = () => {
-    globalThis.terminal = new TermWrapper(document.getElementById("terminal"));
+    let background = window.location.hash;
+    globalThis.terminal = new TermWrapper(document.getElementById("terminal"), {
+      background
+    });
   };
   main();
 })();
