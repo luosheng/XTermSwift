@@ -6710,7 +6710,7 @@ WARNING: This link could potentially be dangerous`)) {
       this.term.onResize(({ cols, rows }) => {
         globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
       });
-      window.addEventListener("resize", this.requestSizeFit.bind(this), true);
+      window.addEventListener("resize", this.requestSizeFit.bind(this), false);
       this.term.onData((data) => {
         globalThis.webkit.messageHandlers.dataHandler.postMessage(data);
       });
@@ -6744,6 +6744,7 @@ WARNING: This link could potentially be dangerous`)) {
   // main.ts
   var main = () => {
     let background = window.location.hash;
+    document.body.setAttribute("style", `background-color: ${background ?? "#FFFFFF"}`);
     globalThis.terminal = new TermWrapper(document.getElementById("terminal"), {
       background
     });

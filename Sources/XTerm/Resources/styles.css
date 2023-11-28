@@ -7,6 +7,7 @@ body {
 
 #terminal {
   flex: 1;
+  padding: 8px;
 }
 
 .xterm .xterm-viewport {
