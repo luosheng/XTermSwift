@@ -6710,8 +6710,7 @@ WARNING: This link could potentially be dangerous`)) {
       this.term.onResize(({ cols, rows }) => {
         globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
       });
-      let resizeObserver = new ResizeObserver(this.requestSizeFit.bind(this));
-      resizeObserver.observe(dom);
+      window.addEventListener("resize", this.requestSizeFit.bind(this), true);
       this.term.onData((data) => {
         globalThis.webkit.messageHandlers.dataHandler.postMessage(data);
       });
