@@ -88,7 +88,7 @@ open class XTermView: WKWebView, WKUIDelegate, DataHandlerDelegate, SizeUpdateHa
     }
   }
 
-  public func setFont(fontFamily: String, fontSize: Int = 13) async {
+  public func setFont(fontFamily: String, fontSize: CGFloat = 13.0) async {
     execute {
       self.callAsyncJavaScript(
         "terminal.setFont(fontFamily, fontSize)",
