@@ -5,12 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  xterm:
-    specifier: ^5.3.0
-    version: 5.3.0
-  xterm-addon-fit:
-    specifier: ^0.8.0
-    version: 0.8.0(xterm@5.3.0)
+  '@xterm/addon-fit':
+    specifier: 0.9.0-beta.14
+    version: 0.9.0-beta.14(@xterm/xterm@5.4.0-beta.14)
+  '@xterm/xterm':
+    specifier: ^5.4.0-beta.14
+    version: 5.4.0-beta.14
 
 devDependencies:
   esbuild:
@@ -27,6 +27,18 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@xterm/addon-fit@0.9.0-beta.14(@xterm/xterm@5.4.0-beta.14):
+    resolution: {integrity: sha512-q4jNC1/KqvWpmKe3vUvuIz3j4pvPHRO4+KrqgWcT5Qt1rrVkVAkiDqTbwXxtshiRujarHb9ZKfTctC8J3/vDmg==}
+    peerDependencies:
+      '@xterm/xterm': ^5.0.0
+    dependencies:
+      '@xterm/xterm': 5.4.0-beta.14
+    dev: false
+
+  /@xterm/xterm@5.4.0-beta.14:
+    resolution: {integrity: sha512-69E++VxeLPxBRhR3EGpkDe3R+EhpEZILo0m6TcN+atC4Zm5+WgcqXBCrBhkvpnBA2AhZp51w+hLC/OCwaHE0rg==}
+    dev: false
 
   /esbuild-android-64@0.15.6:
     resolution: {integrity: sha512-Z1CHSgB1crVQi2LKSBwSkpaGtaloVz0ZIYcRMsvHc3uSXcR/x5/bv9wcZspvH/25lIGTaViosciS/NS09ERmVA==}
@@ -236,15 +248,3 @@ packages:
       esbuild-windows-64: 0.15.6
       esbuild-windows-arm64: 0.15.6
     dev: true
-
-  /xterm-addon-fit@0.8.0(xterm@5.3.0):
-    resolution: {integrity: sha512-yj3Np7XlvxxhYF/EJ7p3KHaMt6OdwQ+HDu573Vx1lRXsVxOcnVJs51RgjZOouIZOczTsskaS+CpXspK81/DLqw==}
-    peerDependencies:
-      xterm: ^5.0.0
-    dependencies:
-      xterm: 5.3.0
-    dev: false
-
-  /xterm@5.3.0:
-    resolution: {integrity: sha512-8QqjlekLUFTrU6x7xck1MsPzPA571K5zNqWm0M0oroYEWVOptZ0+ubQSkQ3uxIEhcIHRujJy6emDWX4A7qyFzg==}
-    dev: false

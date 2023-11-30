@@ -1,5 +1,5 @@
-import { ITheme, Terminal } from 'xterm'
-import { FitAddon } from 'xterm-addon-fit'
+import { ITheme, Terminal } from '@xterm/xterm'
+import { FitAddon } from '@xterm/addon-fit'
 import { WebLinksAddon } from './addons/WebLinksAddon'
 export class TermWrapper {
   private term: Terminal

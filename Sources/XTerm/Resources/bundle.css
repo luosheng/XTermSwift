@@ -1,4 +1,4 @@
-/* node_modules/.pnpm/xterm@5.3.0/node_modules/xterm/css/xterm.css */
+/* node_modules/.pnpm/@xterm+xterm@5.4.0-beta.14/node_modules/@xterm/xterm/css/xterm.css */
 .xterm {
   cursor: text;
   position: relative;
@@ -80,7 +80,7 @@
 .xterm.column-select.focus {
   cursor: crosshair;
 }
-.xterm .xterm-accessibility,
+.xterm .xterm-accessibility:not(.debug),
 .xterm .xterm-message {
   position: absolute;
   left: 0;
@@ -90,6 +90,13 @@
   z-index: 10;
   color: transparent;
   pointer-events: none;
+}
+.xterm .xterm-accessibility-tree:not(.debug) *::selection {
+  color: transparent;
+}
+.xterm .xterm-accessibility-tree {
+  user-select: text;
+  white-space: pre;
 }
 .xterm .live-region {
   position: absolute;
