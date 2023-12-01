@@ -19,7 +19,13 @@ export class TermWrapper {
     this.term.onResize(({ cols, rows }) => {
       globalThis.webkit?.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows })
     })
-    window.addEventListener('resize', this.requestSizeFit.bind(this), false)
+    window.addEventListener('resize', () => {
+      if (this.timeout) {
+        cancelAnimationFrame(this.timeout)
+      }
+      this.timeout = requestAnimationFrame(this.requestSizeFit.bind(this))
+      this.requestSizeFit()
+    }, false)
 
     this.term.onData(data => {
       globalThis.webkit?.messageHandlers.dataHandler.postMessage(data)
