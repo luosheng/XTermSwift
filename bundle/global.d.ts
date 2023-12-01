@@ -1,4 +1,4 @@
-import { Terminal } from 'xterm'
+import { Terminal } from '@xterm/xterm'
 import { TermWrapper } from './term-helper'
 export { }
 
