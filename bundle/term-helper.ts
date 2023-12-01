@@ -26,6 +26,10 @@ export class TermWrapper {
       this.timeout = requestAnimationFrame(this.requestSizeFit.bind(this))
       this.requestSizeFit()
     }, false)
+    window.addEventListener('contextmenu', (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+    }, false)
 
     this.term.onData(data => {
       globalThis.webkit?.messageHandlers.dataHandler.postMessage(data)
