@@ -6767,13 +6767,13 @@ WARNING: This link could potentially be dangerous`)) {
       this.term.open(dom);
       this.fitAddon.fit();
       this.term.onResize(({ cols, rows }) => {
-        globalThis.webkit.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
+        globalThis.webkit?.messageHandlers.sizeUpdateHandler.postMessage({ cols, rows });
       });
       window.addEventListener("resize", this.requestSizeFit.bind(this), false);
       this.term.onData((data) => {
-        globalThis.webkit.messageHandlers.dataHandler.postMessage(data);
+        globalThis.webkit?.messageHandlers.dataHandler.postMessage(data);
       });
-      globalThis.webkit.messageHandlers.readyHandler.postMessage(null);
+      globalThis.webkit?.messageHandlers.readyHandler.postMessage(null);
     }
     applyTheme(theme) {
       this.term.options.theme = theme;

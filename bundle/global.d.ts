@@ -10,7 +10,7 @@ declare global {
           postMessage(data: any): void
         }
       }
-    }
+    } | undefined
     terminal: TermWrapper
   }
 }
