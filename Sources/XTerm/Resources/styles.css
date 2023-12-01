@@ -6,8 +6,11 @@ body {
 }
 
 #terminal {
-  flex: 1;
-  padding: 8px;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
 }
 
 .xterm .xterm-viewport {
